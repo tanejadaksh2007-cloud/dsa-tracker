@@ -13,7 +13,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ProgressProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<HomePage />} />

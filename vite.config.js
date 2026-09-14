@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  // Repo is hosted at username.github.io/dsa-tracker/
+  base: '/dsa-tracker/',
 });

@@ -1,17 +1,25 @@
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { TOPICS } from '../data';
-import { useProgress } from '../context/ProgressContext';
+import { selectOverallStats } from '../store/progressSlice';
 import HowItWorks from '../components/HowItWorks';
 import TopicCard from '../components/TopicCard';
+import DailyChallengeCard from '../components/DailyChallengeCard';
 
 export default function HomePage() {
-  const { stats } = useProgress();
+  const stats = useSelector(selectOverallStats);
 
   return (
     <div className="home-content">
       <header className="home-header">
         <div className="home-title-row">
-          <h1>Your DSA Roadmap</h1>
-          <p className="home-subtitle">Know exactly when you&apos;re ready to move on.</p>
+          <div>
+            <h1>AlgoForge</h1>
+            <p className="home-subtitle">Forge Your Problem-Solving Skills.</p>
+          </div>
+          <Link to="/problems" className="home-explorer-link">
+            <span>⌕</span> Explore All Problems
+          </Link>
         </div>
         <div className="hero-stats">
           <div className="hs-card">
@@ -28,6 +36,8 @@ export default function HomePage() {
           </div>
         </div>
       </header>
+
+      <DailyChallengeCard />
 
       <HowItWorks />
 

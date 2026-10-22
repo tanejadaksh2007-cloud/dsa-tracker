@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { TOPICS } from '../data';
 import { calcScore, verdict, getQuestionStatus } from '../utils/scoring';
-import { useProgress } from '../context/ProgressContext';
+import { selectProgressState } from '../store/progressSlice';
 import QuestionCard from '../components/QuestionCard';
 
 export default function TopicPage() {
   const { topicId } = useParams();
-  const { state } = useProgress();
+  const state = useSelector(selectProgressState);
   const [openCards, setOpenCards] = useState({});
   const topRef = useRef(null);
 
@@ -39,7 +40,12 @@ export default function TopicPage() {
   return (
     <div className="topic-content" ref={topRef}>
       <div className="topic-nav-row">
-        <Link to="/" className="back-btn">← All topics</Link>
+        <div className="topic-nav-left">
+          <Link to="/" className="back-btn">← All topics</Link>
+          <Link to={`/problems?topic=${topic.id}`} className="back-btn" title="Open this topic in Problem Explorer">
+            ⌕ Search & Filter
+          </Link>
+        </div>
         <div className="topic-pager">
           {prev && <Link to={`/topic/${prev.id}`} className="pager-btn">← {prev.name}</Link>}
           {next && <Link to={`/topic/${next.id}`} className="pager-btn">{next.name} →</Link>}

@@ -1,8 +1,10 @@
-# DSA Mastery Tracker 🎯
+# AlgoForge 🎯
 
-A clean, offline-first progress tracker for DSA interview prep — built for Indian CS students targeting campus placements.
+**Forge Your Problem-Solving Skills.**
 
-**Live demo:** `https://YOUR-USERNAME.github.io/dsa-tracker`
+A clean, offline-first progress tracker for DSA interview prep — built for students targeting campus placements and technical interviews.
+
+**Live demo:** `https://YOUR-USERNAME.github.io/dsa-tracker` *(base URL `/dsa-tracker/` preserved for deployment compatibility)*
 
 ## What it does
 

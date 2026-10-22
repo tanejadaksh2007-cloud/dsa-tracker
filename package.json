@@ -1,5 +1,6 @@
 {
-  "name": "dsa-tracker",
+  "name": "algoforge",
+  "description": "Forge Your Problem-Solving Skills.",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.13.0",
+    "axios": "^1.20.0",
+    "firebase": "^13.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-redux": "^9.3.0",
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {

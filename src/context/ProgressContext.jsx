@@ -1,31 +1,39 @@
 import { createContext, useContext, useCallback, useMemo } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { TOPICS } from '../data';
-import { overallStats } from '../utils/scoring';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectProgressState,
+  selectOverallStats,
+  setQuestionStatus,
+  resetProgress,
+} from '../store/progressSlice';
 
 const ProgressContext = createContext(null);
 
-// Lifts tracker state up so Sidebar, Home, and Topic pages all share it
+/**
+ * Compatibility layer backed directly by Redux Toolkit as the single source of truth.
+ * Maintains the exact same interface (state, getStatus, setStatus, resetAll, stats)
+ * without maintaining any duplicate or independent state.
+ */
 export function ProgressProvider({ children }) {
-  const [state, setState] = useLocalStorage('dsa_tracker_v2', {});
+  const dispatch = useDispatch();
+  const state = useSelector(selectProgressState);
+  const stats = useSelector(selectOverallStats);
 
   const getStatus = useCallback(
     (topicId, qName) => state[topicId]?.[qName] || 'none',
     [state]
   );
 
-  const setStatus = useCallback((topicId, qName, next) => {
-    setState((prev) => ({
-      ...prev,
-      [topicId]: { ...prev[topicId], [qName]: next },
-    }));
-  }, [setState]);
+  const setStatus = useCallback(
+    (topicId, qName, next) => {
+      dispatch(setQuestionStatus({ topicId, qName, status: next }));
+    },
+    [dispatch]
+  );
 
   const resetAll = useCallback(() => {
-    setState({});
-  }, [setState]);
-
-  const stats = useMemo(() => overallStats(TOPICS, state), [state]);
+    dispatch(resetProgress());
+  }, [dispatch]);
 
   const value = useMemo(
     () => ({ state, getStatus, setStatus, resetAll, stats }),

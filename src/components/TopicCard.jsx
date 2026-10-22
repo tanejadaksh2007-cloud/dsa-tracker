@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { calcScore, solvedCount, totalQuestions } from '../utils/scoring';
-import { useProgress } from '../context/ProgressContext';
+import { useSelector } from 'react-redux';
+import { selectTopicScore, selectTopicSolvedCount } from '../store/progressSlice';
+import { totalQuestions } from '../utils/scoring';
 
 export default function TopicCard({ topic }) {
-  const { state } = useProgress();
-  const score = calcScore(topic, state);
+  const score = useSelector((state) => selectTopicScore(state, topic));
   const isMastered = score >= 80;
-  const solved = solvedCount(topic, state);
+  const solved = useSelector((state) => selectTopicSolvedCount(state, topic));
   const total = totalQuestions(topic);
   const barColor = isMastered ? 'var(--c-green)' : score > 0 ? 'var(--c-amber)' : 'var(--c-border)';
   const pctColor = isMastered ? 'var(--c-green)' : score > 0 ? 'var(--c-amber)' : 'var(--c-text-muted)';

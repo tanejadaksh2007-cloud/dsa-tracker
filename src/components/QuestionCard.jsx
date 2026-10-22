@@ -1,21 +1,38 @@
-import { useProgress } from '../context/ProgressContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectQuestionStatus, setQuestionStatus } from '../store/progressSlice';
+import { useToast } from '../context/ToastContext';
 
 export default function QuestionCard({ topicId, question, cardKey, isOpen, onToggle }) {
-  const { getStatus, setStatus } = useProgress();
-  const status = getStatus(topicId, question.name);
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+  const status = useSelector((state) => selectQuestionStatus(state, topicId, question.name));
   const link = question.link || question.leetcode;
   const linkLabel = question.linkLabel || 'LeetCode ↗';
 
   function mark(value, event) {
     event.stopPropagation();
-    setStatus(topicId, question.name, value);
+    dispatch(setQuestionStatus({ topicId, qName: question.name, status: value }));
+    if (value === 'solved') {
+      toast.success(`"${question.name}" marked as solved!`);
+    } else if (value === 'attempted') {
+      toast.info(`"${question.name}" marked as attempted.`);
+    } else {
+      toast.info(`Reset status for "${question.name}".`);
+    }
   }
 
   return (
     <div className={`q-card ${status}`} onClick={onToggle}>
       <div className="q-row">
         <div className={`q-dot ${status}`} />
-        <div className="q-name">{question.name}</div>
+        <div className="q-name">
+          <span>{question.name}</span>
+          {question.topicName && (
+            <span className="q-topic-badge" title={`Topic: ${question.topicName}`}>
+              {question.topicIcon || '◈'} {question.topicName}
+            </span>
+          )}
+        </div>
         <span className={`q-tag t-${question.tag}`}>{question.tag}</span>
         <span className={`q-chevron ${isOpen ? 'open' : ''}`}>›</span>
       </div>

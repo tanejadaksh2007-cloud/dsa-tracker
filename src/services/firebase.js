@@ -11,12 +11,12 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyCFdSNAZP1rWhmBmXuYEXXjUTU8V9bx514',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'algoforge-12831.firebaseapp.com',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'algoforge-12831',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'algoforge-12831.firebasestorage.app',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '691184768539',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:691184768539:web:cc71cf1ad253b59cf8cabe',
 };
 
 // Check if critical Firebase config keys are supplied
